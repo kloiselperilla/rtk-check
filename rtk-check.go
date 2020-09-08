@@ -46,14 +46,16 @@ func main() {
 	var knownJoyoKanji []RtkListing
 	var unknownJoyoKanji []RtkListing
 	var nonJoyoKanji []string
-    for _, kanji := range kanjiToCheck{
-	    rtkNumber := pos(kanjiList, string(kanji))
-	    if rtkNumber == -1 {
-		    nonJoyoKanji = append(nonJoyoKanji, string(kanji))
-	    } else if rtkNumber > rtkProgress {
-			unknownJoyoKanji = append(unknownJoyoKanji, RtkListing{string(kanji), rtkNumber})
-	    } else {
-			knownJoyoKanji = append(knownJoyoKanji, RtkListing{string(kanji), rtkNumber})
+    for _, kanji := range kanjiToCheck {
+		if (kanji >= 0x4E00 && kanji <= 0x9FBF) {
+	    	rtkNumber := pos(kanjiList, string(kanji))
+	    	if rtkNumber == -1 {
+		    	nonJoyoKanji = append(nonJoyoKanji, string(kanji))
+	    	} else if rtkNumber > rtkProgress {
+				unknownJoyoKanji = append(unknownJoyoKanji, RtkListing{string(kanji), rtkNumber})
+	    	} else {
+				knownJoyoKanji = append(knownJoyoKanji, RtkListing{string(kanji), rtkNumber})
+			}
 		}
     }
     if len(nonJoyoKanji) != 0 {
